@@ -21,6 +21,13 @@ namespace Game.Scripts
         
         [Header("Bullet list")]
         [SerializeField] private List<GameObject> bullets;
-        
+
+
+        public void MoveTank(Vector2 direction, float speed)
+        {
+            fuel -= fuelConsumption * Time.deltaTime;
+            if (fuel <= 0) fuel = 0;
+            else tankMovement.DoMoveTank(direction, speed);
+        }
     }
 }
