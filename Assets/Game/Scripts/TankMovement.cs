@@ -3,15 +3,54 @@ using UnityEngine;
 namespace Game.Scripts
 {
     [RequireComponent(typeof(Rigidbody2D))]
-    public class TankMovement : MonoBehaviour
+    public class TankMovementRb : MonoBehaviour, IMoveable
     {
         [SerializeField] private Rigidbody2D rb;
 
-        public void MoveTank(Vector2 direction, float speed)
+        [SerializeField] private GameObject GroundCheckRight;
+        [SerializeField] private GameObject GroundCheckLeft;
+
+        [SerializeField] private GameObject AngleCheckRight;
+        [SerializeField] private GameObject AngleCheckLeft;
+        public void DoMove(Vector2 direction, float speed)
         {
-            Vector2 offset = direction * speed * Time.deltaTime;
-            rb.MovePosition(rb.position + offset);
+            if (IsOnGround() && CheckObstacleAngle(direction) <= 45)
+            {
+                Vector2 offset = rb.transform.TransformDirection(direction) * speed * Time.deltaTime;
+                rb.MovePosition(rb.position + offset);
+            }
+        }
+
+        private bool IsOnGround()
+        {
+            RaycastHit2D hitRight;
+            RaycastHit2D hitLeft;
+
+            Debug.DrawRay(GroundCheckLeft.transform.position, GroundCheckLeft.transform.TransformDirection(Vector2.down) * 0.1f, Color.red);
+            Debug.DrawRay(GroundCheckRight.transform.position, GroundCheckRight.transform.TransformDirection(Vector2.down) * 0.1f, Color.red);
+
+            hitLeft = Physics2D.Raycast(GroundCheckLeft.transform.position, GroundCheckLeft.transform.TransformDirection(Vector2.down), 0.1f, LayerMask.GetMask("Ground"));
+            hitRight = Physics2D.Raycast(GroundCheckRight.transform.position, GroundCheckRight.transform.TransformDirection(Vector2.down), 0.1f, LayerMask.GetMask("Ground"));
+
+            return hitLeft.collider != null || hitRight.collider != null;
+        }
+
+        private float CheckObstacleAngle(Vector2 direction)
+        {
+            RaycastHit2D hit;
+            Vector2 rayPos;
+            if (direction == Vector2.left) rayPos = AngleCheckLeft.transform.position;
+            else rayPos = AngleCheckRight.transform.position;
+
+            Debug.DrawRay(rayPos, direction * 2f, Color.red);
+
+            hit = Physics2D.Raycast(rayPos, direction, 2f, LayerMask.GetMask("Ground"));
+
+            Debug.Log(Vector2.Angle(hit.normal, direction) - 90f);
+            if (hit.collider) return Vector2.Angle(hit.normal, direction) - 90f;
             
+            else return 0f;
+
         }
     }
 }

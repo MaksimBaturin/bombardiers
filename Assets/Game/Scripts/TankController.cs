@@ -10,10 +10,10 @@ namespace Game.Scripts
         {
             if (Input.GetKey(KeyCode.D))
             {
-                tank.MoveTank(new Vector2(1f, 0f), tank.MovementSpeed);
+                tank.MoveTank(Vector2.right, tank.MovementSpeed);
             }else if (Input.GetKey(KeyCode.A))
             {
-                tank.MoveTank(new Vector2(-1f, 0f), tank.MovementSpeed);
+                tank.MoveTank(Vector2.left, tank.MovementSpeed);
             }
 
             if (Input.GetMouseButtonDown(0))

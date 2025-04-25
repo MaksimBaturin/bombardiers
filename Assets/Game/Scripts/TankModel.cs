@@ -7,7 +7,7 @@ namespace Game.Scripts
     public class TankModel : MonoBehaviour
     {
         [Header("Essentials")]
-        public TankMovement tankMovement;
+        public IMoveable tankMovement;
         public TankGunRotator tankRotator;
         
         [Header("Stats")]
@@ -22,12 +22,15 @@ namespace Game.Scripts
         [Header("Bullet list")]
         [SerializeField] private List<GameObject> bullets;
 
-
+        public void Awake()
+        {
+            tankMovement = GetComponent<IMoveable>();
+        }
         public void MoveTank(Vector2 direction, float speed)
         {
             fuel -= fuelConsumption * Time.deltaTime;
             if (fuel <= 0) fuel = 0;
-            else tankMovement.DoMoveTank(direction, speed);
+            else tankMovement.DoMove(direction, speed);
         }
     }
 }
