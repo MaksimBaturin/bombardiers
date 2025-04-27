@@ -1,3 +1,6 @@
+using System;
+using System.Collections;
+using DG.Tweening;
 using UnityEngine;
 
 namespace Game.Scripts
@@ -12,9 +15,38 @@ namespace Game.Scripts
 
         [SerializeField] private GameObject AngleCheckRight;
         [SerializeField] private GameObject AngleCheckLeft;
+
+        [SerializeField] private GameObject TurnedOverCheck;
+
+        public float AllowedAngle;
+
+        private void Update()
+        {
+            if (rb.transform.rotation.eulerAngles.z >= 90f || rb.transform.rotation.eulerAngles.z <= -90f)
+            {
+                if (IsTurnedOver())
+                {
+                    RotateToNormal();
+                }
+            }
+        }
+
+        public void RotateToNormal()
+        {
+            StartCoroutine(DoRotate());
+            transform.DOJump(new Vector3(rb.transform.position.x, rb.transform.position.y + 4f), 0.8f, 1, 0.6f);
+        }
+        
+        private IEnumerator DoRotate()
+        {
+            yield return new WaitForSeconds(0.2f);
+            transform.DORotate(Vector3.zero, 0.4f, RotateMode.FastBeyond360);
+        }
+        
+
         public void DoMove(Vector2 direction, float speed)
         {
-            if (IsOnGround() && CheckObstacleAngle(direction) <= 45)
+            if (IsOnGround() && CheckObstacleAngle(direction) <= AllowedAngle)
             {
                 Vector2 offset = rb.transform.TransformDirection(direction) * speed * Time.deltaTime;
                 rb.MovePosition(rb.position + offset);
@@ -42,15 +74,22 @@ namespace Game.Scripts
             if (direction == Vector2.left) rayPos = AngleCheckLeft.transform.position;
             else rayPos = AngleCheckRight.transform.position;
 
-            Debug.DrawRay(rayPos, direction * 2f, Color.red);
+            Debug.DrawRay(rayPos, direction * 0.5f, Color.red);
 
-            hit = Physics2D.Raycast(rayPos, direction, 2f, LayerMask.GetMask("Ground"));
+            hit = Physics2D.Raycast(rayPos, direction, 0.5f, LayerMask.GetMask("Ground"));
 
             Debug.Log(Vector2.Angle(hit.normal, direction) - 90f);
             if (hit.collider) return Vector2.Angle(hit.normal, direction) - 90f;
             
             else return 0f;
+        }
 
+        private bool IsTurnedOver()
+        {
+            RaycastHit2D hit;
+            Debug.DrawRay(TurnedOverCheck.transform.position, TurnedOverCheck.transform.TransformDirection(Vector2.up) * 1f, Color.red);
+            hit = Physics2D.Raycast(TurnedOverCheck.transform.position, TurnedOverCheck.transform.TransformDirection(Vector2.up), 1f, LayerMask.GetMask("Ground"));
+            return hit.collider != null;
         }
     }
 }

@@ -6,7 +6,7 @@ namespace Game.Scripts
     {
         [SerializeField] private GameObject gun;
         [SerializeField] public Transform pivot;
-
+        
         public void RotateGun(float rotateAngle)
         {
             float currentAngle = gun.transform.eulerAngles.z;

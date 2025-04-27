@@ -22,9 +22,13 @@ namespace Game.Scripts
         [Header("Bullet list")]
         [SerializeField] private List<GameObject> bullets;
 
+        [Header("Technical stats")] [SerializeField]
+        private float AllowedAngleToRide;
+
         public void Awake()
         {
             tankMovement = GetComponent<IMoveable>();
+            GetComponent<TankMovementRb>().AllowedAngle = AllowedAngleToRide;
         }
         public void MoveTank(Vector2 direction, float speed)
         {
