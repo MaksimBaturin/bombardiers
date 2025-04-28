@@ -18,6 +18,11 @@ namespace Game.Scripts
 
         [SerializeField] private GameObject TurnedOverCheck;
 
+        [SerializeField] private TankRotator tankRotator;
+
+        [SerializeField] private float flipCooldown;
+        private bool isCooldownActive = false;
+
         public float AllowedAngle;
 
         private void Update()
@@ -26,23 +31,27 @@ namespace Game.Scripts
             {
                 if (IsTurnedOver())
                 {
-                    RotateToNormal();
+                    tankRotator.RotateToNormal();
                 }
             }
         }
 
-        public void RotateToNormal()
+        public void FlipTank()
         {
-            StartCoroutine(DoRotate());
-            transform.DOJump(new Vector3(rb.transform.position.x, rb.transform.position.y + 4f), 0.8f, 1, 0.6f);
+            if (!isCooldownActive)
+            {
+                tankRotator.RotateToNormal();
+                isCooldownActive = true;
+                StartCoroutine(FlipCooldown());
+            }
         }
-        
-        private IEnumerator DoRotate()
+
+        private IEnumerator FlipCooldown()
         {
-            yield return new WaitForSeconds(0.2f);
-            transform.DORotate(Vector3.zero, 0.4f, RotateMode.FastBeyond360);
+            yield return new WaitForSeconds(flipCooldown);
+
+            isCooldownActive = false;
         }
-        
 
         public void DoMove(Vector2 direction, float speed)
         {

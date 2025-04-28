@@ -7,9 +7,10 @@ namespace Game.Scripts
     public class TankModel : MonoBehaviour
     {
         [Header("Essentials")]
-        public IMoveable tankMovement;
-        public TankGunRotator tankRotator;
+        [SerializeField] private TankMovementRb tankMovement;
+        public TankGunRotator tankGunRotator;
         
+
         [Header("Stats")]
         [SerializeField] private float movementSpeed;
         public float MovementSpeed{ get => movementSpeed; private set => movementSpeed = value; }
@@ -27,14 +28,18 @@ namespace Game.Scripts
 
         public void Awake()
         {
-            tankMovement = GetComponent<IMoveable>();
-            GetComponent<TankMovementRb>().AllowedAngle = AllowedAngleToRide;
+            tankMovement.AllowedAngle = AllowedAngleToRide;
         }
         public void MoveTank(Vector2 direction, float speed)
         {
             fuel -= fuelConsumption * Time.deltaTime;
             if (fuel <= 0) fuel = 0;
             else tankMovement.DoMove(direction, speed);
+        }
+
+        public void FlipTank()
+        {
+            tankMovement.FlipTank();
         }
     }
 }

@@ -15,14 +15,20 @@ namespace Game.Scripts
             {
                 tank.MoveTank(Vector2.left, tank.MovementSpeed);
             }
-
+            
             if (Input.GetMouseButtonDown(0))
             {
                 Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                Vector2 direction = mousePos - (Vector2)tank.tankRotator.pivot.position;
+                Vector2 direction = mousePos - (Vector2)tank.tankGunRotator.pivot.position;
                 float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-                tank.tankRotator.RotateGun(angle);
+                tank.tankGunRotator.RotateGun(angle);
             }
+
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                tank.FlipTank();
+            }
+
         }
     }
 }

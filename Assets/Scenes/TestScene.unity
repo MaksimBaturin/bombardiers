@@ -613,6 +613,7 @@ GameObject:
   - component: {fileID: 1175700665}
   - component: {fileID: 1175700664}
   - component: {fileID: 1175700666}
+  - component: {fileID: 1175700667}
   m_Layer: 0
   m_Name: Tank
   m_TagString: Untagged
@@ -701,7 +702,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1175700659}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: 0.8811129, w: 0.47290617}
+  m_LocalRotation: {x: -0, y: -0, z: 0.027168121, w: 0.9996309}
   m_LocalPosition: {x: -16.28, y: 4.83, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 1
@@ -711,7 +712,7 @@ Transform:
   - {fileID: 348186758}
   - {fileID: 979817886}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 123.554}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 3.114}
 --- !u!114 &1175700664
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -730,6 +731,8 @@ MonoBehaviour:
   AngleCheckRight: {fileID: 1942526386}
   AngleCheckLeft: {fileID: 1043214345}
   TurnedOverCheck: {fileID: 621095820}
+  tankRotator: {fileID: 1175700667}
+  flipCooldown: 3
   AllowedAngle: 45
 --- !u!114 &1175700665
 MonoBehaviour:
@@ -743,7 +746,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31c88e2db8fc40c29252c3b03b813201, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tankRotator: {fileID: 1175700666}
+  tankMovement: {fileID: 1175700664}
+  tankGunRotator: {fileID: 1175700666}
   movementSpeed: 25
   health: 0
   fuel: 100
@@ -764,6 +768,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gun: {fileID: 1289146427}
   pivot: {fileID: 1383912513}
+--- !u!114 &1175700667
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1175700659}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc9b4240d3c8854489b04af2cda59b0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rb: {fileID: 1175700661}
 --- !u!1 &1287608612
 GameObject:
   m_ObjectHideFlags: 0
@@ -1400,7 +1417,7 @@ Transform:
   m_GameObject: {fileID: 1885577511}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: 0.14394756, w: 0.98958534}
-  m_LocalPosition: {x: 6.9, y: -11.8, z: 0}
+  m_LocalPosition: {x: 18.7, y: -8.7, z: 0}
   m_LocalScale: {x: 60.482906, y: 11.990077, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1623,13 +1640,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2075585391}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.009740432, y: 0.0008714461, z: 0.31636873, w: 0.9485859}
-  m_LocalPosition: {x: -14.4, y: -16.7, z: -0.1}
+  m_LocalRotation: {x: 0.009300979, y: 0.003012368, z: 0.3399094, w: 0.9404074}
+  m_LocalPosition: {x: -5.7, y: -11.4, z: -0}
   m_LocalScale: {x: 60.482906, y: 11.990077, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 1.027, y: 0.448, z: 36.893}
+  m_LocalEulerAnglesHint: {x: 0.885, y: 0.687, z: 39.75}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
