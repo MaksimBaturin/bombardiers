@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
-
+using Game.Scripts;
 [System.Serializable]
 public struct LaunchData
 {
@@ -336,7 +336,7 @@ public abstract class Projectile : MonoBehaviour
 
         foreach (var hit in hits)
         {
-            Health health = hit.GetComponent<Health>();
+            IHealth health = hit.GetComponent<IHealth>();
             if (health != null)
             {
                 float distance = Vector2.Distance(currentPosition, hit.transform.position);
