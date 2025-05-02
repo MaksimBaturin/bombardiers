@@ -29,6 +29,18 @@ namespace Game.Scripts
                 tank.FlipTank();
             }
 
+            //TODO Починить выстрел
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                Projectile newProjectile = Instantiate(
+                    tank.selectedProjectile,
+                    tank.firePoint.position,
+                    Quaternion.identity
+                );
+
+                newProjectile.LaunchAtAngle(tank.tankGunRotator.gun.transform.rotation.eulerAngles.z, tank.MaxShootForce * tank.CurrentShootPower);
+            }
+
         }
     }
 }

@@ -1,4 +1,6 @@
 ﻿using System;
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
@@ -14,6 +16,9 @@ namespace Game.Scripts.UI
         [SerializeField] private RectTransform pointer;
         private float initialPointerWidth;
         
+        [SerializeField] private RectTransform textPivot;
+        [SerializeField] private TMP_Text text;
+        [SerializeField] private Vector3 textOffset;
         private void Awake()
         {
             rectTransform = GetComponent<RectTransform>();
@@ -35,6 +40,10 @@ namespace Game.Scripts.UI
                 tankGunRotator.pivot.transform.position.y, 
                 rectTransform.position.z
             );
+            
+            text.transform.position = textPivot.position + textOffset;
+            text.text = gun.transform.rotation.eulerAngles.z.ToString("0.0") + "\u00b0 " + 
+                        (tankGunRotator.GetComponent<TankModel>().CurrentShootPower * 100).ToString("0.0");
             OnClick();
         }
         

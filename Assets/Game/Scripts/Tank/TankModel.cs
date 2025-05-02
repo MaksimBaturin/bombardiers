@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using NUnit.Framework;
 using UnityEngine;
 
 namespace Game.Scripts
@@ -9,7 +10,8 @@ namespace Game.Scripts
         [Header("Essentials")]
         [SerializeField] private TankMovementRb tankMovement;
         public TankGunRotator tankGunRotator;
-
+        public Transform firePoint;
+        
         [Header("Stats")]
         [SerializeField] private float movementSpeed;
         public float MovementSpeed{ get => movementSpeed; private set => movementSpeed = value; }
@@ -21,9 +23,9 @@ namespace Game.Scripts
 
         [SerializeField] private float maxHealth;
 
-        [SerializeField] private float MaxShootForce;
+        [SerializeField] public float MaxShootForce;
 
-        //0 - 100%
+        //0 - 1
         public float CurrentShootPower;
         
         private float currentHealth;
@@ -32,7 +34,7 @@ namespace Game.Scripts
         [Header("Projectiles")]
         [SerializeField] private List<Projectile> projectiles;
 
-        [SerializeField] private Projectile selectedProjectile;
+        [SerializeField] public Projectile selectedProjectile;
 
         [Header("Technical stats")] 
         [SerializeField] private float AllowedAngleToRide;
@@ -63,6 +65,17 @@ namespace Game.Scripts
         [Header("Prefabs")]
         [SerializeField] private UI.Scope scopePrefab;
         private UI.Scope scope;
+
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                if (!IsScopeActive)
+                {
+                    IsScopeActive = true;
+                }else IsScopeActive = false;
+            }
+        }
 
         public void Awake()
         {
