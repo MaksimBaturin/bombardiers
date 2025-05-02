@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using DG.Tweening;
+using UnityEditor.Media;
 using UnityEngine;
 
 namespace Game.Scripts
@@ -21,6 +22,7 @@ namespace Game.Scripts
         [SerializeField] private TankRotator tankRotator;
 
         [SerializeField] private float flipCooldown;
+        
         private bool isCooldownActive = false;
 
         public float AllowedAngle;

@@ -16,7 +16,7 @@ namespace Game.Scripts
                 tank.MoveTank(Vector2.left, tank.MovementSpeed);
             }
             
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButton(0))
             {
                 Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 Vector2 direction = mousePos - (Vector2)tank.tankGunRotator.pivot.position;
