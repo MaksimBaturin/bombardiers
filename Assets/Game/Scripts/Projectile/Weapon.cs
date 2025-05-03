@@ -4,16 +4,17 @@ public class Weapon : MonoBehaviour
 {
     [Header("Projectile Settings")]
     public Projectile projectilePrefab; 
-    public Transform firePoint;       
+    public Transform firePoint;
 
     public void FireAtAngle(float angleDegrees, float force)
     {
-        
         if (!projectilePrefab || !firePoint)
         {
             Debug.LogError("Не назначены префаб снаряда или точка выстрела!");
             return;
         }
+
+        Debug.Log($"[Weapon] Выстрел! Угол: {angleDegrees}, Сила: {force}");
 
         Projectile newProjectile = Instantiate(
             projectilePrefab,
@@ -21,8 +22,11 @@ public class Weapon : MonoBehaviour
             Quaternion.identity
         );
 
+        Debug.Log($"[Weapon] Снаряд создан на позиции {firePoint.position}");
+
         newProjectile.LaunchAtAngle(angleDegrees, force);
     }
+
 
     private void Update()
     {
