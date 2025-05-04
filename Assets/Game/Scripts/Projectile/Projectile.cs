@@ -56,6 +56,8 @@ public class Projectile : MonoBehaviour
         if (!isLaunched) return;
 
         Vector2 velocity = (currentPosition - previousPosition) / Time.fixedDeltaTime;
+        Vector2 windForce = WindController.GetWindForce();
+
 
         // 1. Сила притяжения
         Vector2 gravity = new Vector2(0f, -9.81f) * gravityScale * mass;
@@ -64,7 +66,7 @@ public class Projectile : MonoBehaviour
         Vector2 airDrag = -airResistance * velocity;
 
         // 3. Прикладная сила 
-        Vector2 netForce = gravity + airDrag;
+        Vector2 netForce = gravity + airDrag + windForce;
         Vector2 acceleration = netForce / mass;
 
         // Верле-интеграция
@@ -74,8 +76,10 @@ public class Projectile : MonoBehaviour
         currentPosition = nextPosition;
 
         rb.MovePosition(currentPosition);
+        Debug.Log($"[Projectile] Wind force: {windForce}");
 
-        
+
+
         // Поворот по направлению скорости
         if (velocity.sqrMagnitude > 0.0001f) 
         {
