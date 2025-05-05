@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using Game.Scripts;
+using System;
+using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
@@ -14,12 +16,17 @@ public class Projectile : MonoBehaviour
     public float minForce = 1f;
     public float maxForce = 100f;
 
+    [Header("Урон")]
+    public float damage = 1;
+
     private Vector2 currentPosition;
     private Vector2 previousPosition;
     private Vector2 externalForce;
 
     private bool isLaunched = false;
     private Rigidbody2D rb;
+
+    public event Action onDeathEvent;
 
     protected virtual void Awake()
     {
@@ -92,12 +99,20 @@ public class Projectile : MonoBehaviour
     // Когда пуля сталкивается с любым объектом
     private void OnTriggerEnter2D(Collider2D other)
     {
+        onDeathEvent.Invoke();
         Destroy(gameObject);
     }
 
     // Если нужно, используем физическое столкновение
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        IHealth obj;
+
+        if (collision.gameObject.TryGetComponent<IHealth>(out obj))
+        {
+            obj.TakeDamage(damage);
+        }
+        onDeathEvent.Invoke();
         Destroy(gameObject);
     }
 }

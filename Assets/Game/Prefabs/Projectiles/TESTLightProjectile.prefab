@@ -102,13 +102,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b1f2fa794e7f8f449781816ac1c4216, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 10
-  explosionRadius: 1
-  initialSpeed: 10
-  explosionEffect: {fileID: 0}
+  forceScale: 2
   mass: 1
-  gravityScale: 1
   airResistance: 0.1
+  gravityScale: 1
+  minForce: 1
+  maxForce: 100
+  damage: 15
 --- !u!50 &456610050539718803
 Rigidbody2D:
   serializedVersion: 5
@@ -132,9 +132,9 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!61 &8763901983725320046
 BoxCollider2D:

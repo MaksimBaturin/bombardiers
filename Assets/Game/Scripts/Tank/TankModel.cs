@@ -8,8 +8,8 @@ namespace Game.Scripts
     public class TankModel : MonoBehaviour, IHealth
     {
         [Header("Essentials")]
-        [SerializeField] private TankMovementRb tankMovement;
-        public TankGunRotator tankGunRotator;
+        public TankMovementRb tankMovement { get => tankMovement; private set => tankMovement = value; }
+        public TankGunRotator tankGunRotator { get => tankGunRotator; private set => tankGunRotator = value; }
         public Transform firePoint;
         
         [Header("Stats")]
@@ -25,6 +25,8 @@ namespace Game.Scripts
 
         [SerializeField] public float MaxShootForce;
 
+        public event Action OnDeath;
+
         //0 - 1
         public float CurrentShootPower;
         
@@ -38,71 +40,29 @@ namespace Game.Scripts
 
         [Header("Technical stats")] 
         [SerializeField] private float AllowedAngleToRide;
-        
-        private bool isScopeActive = false;
-        private bool IsScopeActive
-        {
-            get => isScopeActive;
-            set
-            {
-                isScopeActive = value;
-                if (value)
-                {
-                    scope = Instantiate(scopePrefab, GameObject.Find("InGame UI Canvas").transform);
-                    scope.tankGunRotator = tankGunRotator;
-                }
-                else
-                {
-                    if (scope)
-                    {
-                        Destroy(scope.gameObject);
-                        scope = null;
-                    }
-                }
-            }
-        }
-        
-        [Header("Prefabs")]
-        [SerializeField] private UI.Scope scopePrefab;
-        private UI.Scope scope;
-
-        private void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.F))
-            {
-                if (!IsScopeActive)
-                {
-                    IsScopeActive = true;
-                }else IsScopeActive = false;
-            }
-        }
 
         public void Awake()
         {
             tankMovement.AllowedAngle = AllowedAngleToRide;
             currentHealth = maxHealth;
         }
-        public void MoveTank(Vector2 direction, float speed)
+        
+        public void ConsumeFuel()
         {
             fuel -= fuelConsumption * Time.deltaTime;
             if (fuel <= 0) fuel = 0;
-            else tankMovement.DoMove(direction, speed);
-        }
-
-        public void FlipTank()
-        {
-            tankMovement.FlipTank();
         }
 
         public void TakeDamage(float damage)
         {
             currentHealth -= damage;
+            Debug.Log($"damage: {damage}, health: {currentHealth}");
             if (currentHealth <= 0) Die();
         }
 
         public void Die()
         {
-            //TODO эффектики
+            
             Destroy(gameObject);
         }
         
