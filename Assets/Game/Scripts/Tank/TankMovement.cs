@@ -1,13 +1,10 @@
-using System;
 using System.Collections;
-using DG.Tweening;
-using UnityEditor.Media;
 using UnityEngine;
 
 namespace Game.Scripts
 {
     [RequireComponent(typeof(Rigidbody2D))]
-    public class TankMovementRb : MonoBehaviour, IMoveable
+    public class TankMovement : MonoBehaviour, IMoveable
     {
         [SerializeField] private Rigidbody2D rb;
 

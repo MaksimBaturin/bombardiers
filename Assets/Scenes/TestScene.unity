@@ -1741,7 +1741,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c610bc03195b4f69961e0a4ec6ed84be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scopePrefab: {fileID: 0}
+  tank: {fileID: 1175700665}
+  scopePrefab: {fileID: 4353094664259563061, guid: 88a9e00836eae2147bfc9d1bb214e22e, type: 3}
 --- !u!1 &1175700659
 GameObject:
   m_ObjectHideFlags: 0
@@ -1889,6 +1890,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31c88e2db8fc40c29252c3b03b813201, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tankMovement: {fileID: 1175700664}
+  tankGunRotator: {fileID: 1175700666}
   firePoint: {fileID: 1288603738}
   movementSpeed: 25
   health: 100

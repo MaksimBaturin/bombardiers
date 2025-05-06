@@ -8,8 +8,11 @@ namespace Game.Scripts
     public class TankModel : MonoBehaviour, IHealth
     {
         [Header("Essentials")]
-        public TankMovementRb tankMovement { get => tankMovement; private set => tankMovement = value; }
-        public TankGunRotator tankGunRotator { get => tankGunRotator; private set => tankGunRotator = value; }
+        [SerializeField] private TankMovement tankMovement;
+        public TankMovement TankMovement { get => tankMovement; private set => tankMovement = value; }
+
+        [SerializeField] private TankGunRotator tankGunRotator;
+        public TankGunRotator TankGunRotator { get => tankGunRotator; private set => tankGunRotator = value; }
         public Transform firePoint;
         
         [Header("Stats")]

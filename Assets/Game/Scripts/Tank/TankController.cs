@@ -5,7 +5,7 @@ namespace Game.Scripts
 {
     public class TankController : MonoBehaviour
     {
-        private TankModel tank;
+        [SerializeField] private TankModel tank;
 
         public TankModel Tank {
             get { return tank; } 
@@ -14,15 +14,15 @@ namespace Game.Scripts
                 if (IsScopeActive) IsScopeActive = false;
             
                 tank = value;
-                tankMovement = tank.tankMovement;
-                tankGunRotator = tank.tankGunRotator;
+                tankMovement = tank.TankMovement;
+                tankGunRotator = tank.TankGunRotator;
                 tank.OnDeath += onTankDeath;
 
                 IsScopeActive = true;
             }
         }
 
-        private TankMovementRb tankMovement;
+        private TankMovement tankMovement;
         private TankGunRotator tankGunRotator;
 
 
@@ -56,6 +56,12 @@ namespace Game.Scripts
 
         public event Action OnTurnEnd;
 
+        private void Awake()
+        {
+            tankMovement = tank?.TankMovement;
+            tankGunRotator = tank?.TankGunRotator;
+            IsScopeActive = true;
+        }
         private void Update()
         {
             if (Input.GetKey(KeyCode.D))
@@ -69,9 +75,9 @@ namespace Game.Scripts
             if (Input.GetMouseButton(0))
             {
                 Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                Vector2 direction = mousePos - (Vector2)tank.tankGunRotator.pivot.position;
+                Vector2 direction = mousePos - (Vector2)tankGunRotator.pivot.position;
                 float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-                tank.tankGunRotator.RotateGun(angle);
+                tankGunRotator.RotateGun(angle);
             }
 
             if (Input.GetKeyDown(KeyCode.R))
@@ -87,14 +93,18 @@ namespace Game.Scripts
                     Quaternion.identity
                 );
                 newProjectile.onDeathEvent += onBulletDeath;
-                newProjectile.LaunchAtAngle(tank.tankGunRotator.gun.transform.rotation.eulerAngles.z, tank.MaxShootForce * tank.CurrentShootPower);
+                newProjectile.LaunchAtAngle(tankGunRotator.gun.transform.rotation.eulerAngles.z, tank.MaxShootForce * tank.CurrentShootPower);
             }
 
         }
 
         public void MoveTank(Vector2 direction, float speed)
         {
-            if (tank.Fuel > 0) tankMovement.DoMove(direction, speed);
+            if (tank.Fuel > 0)
+            {
+                tank.ConsumeFuel();
+                tankMovement.DoMove(direction, speed);
+            }
         }
 
         public void FlipTank()
@@ -104,7 +114,7 @@ namespace Game.Scripts
 
         private void onBulletDeath()
         {
-            OnTurnEnd.Invoke();
+            return;
         }
 
         private void onTankDeath()
