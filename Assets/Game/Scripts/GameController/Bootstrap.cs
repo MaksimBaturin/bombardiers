@@ -1,23 +1,30 @@
-using Game.Scripts;
-using NUnit.Framework;
-using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Bootstrap: MonoBehaviour
 {
     [SerializeField] private GameObject tankPrefab;
-    [SerializeField] private GameObject terrainPrefab; //âðåìåííî
+    [SerializeField] private GameObject terrainPrefab;
     [SerializeField] private GameObject inGameUIPrefab;
-    [SerializeField] private GameObject tankController;
-    private GameController gameController;
+    [SerializeField] private GameObject tankControllerPrefab;
+    [SerializeField] private GameController gameControllerPrefab;
+    [SerializeField] private WindController windControllerPrefab;
+    
+    public static Bootstrap Instance { get; private set; }
 
-    public void GameInit(List<Player> players)
+    private void Awake()
+    {
+        Instance = this;
+    }
+
+    public void GameInit(Player[] players)
     {
         StartCoroutine(EnableLoadingScreen());
 
         Instantiate(terrainPrefab);
 
-        for (int i = 0; i < players.Count; i++)
+        for (int i = 0; i < players.Length; i++)
         {
             float positionX = Random.Range(-Camera.main.rect.width / 2, Camera.main.rect.width / 2);
             float positionY = 50f;
@@ -29,18 +36,17 @@ public class Bootstrap: MonoBehaviour
                 players[i].tank = Instantiate(tankPrefab);
                 players[i].tank.transform.position = hit.transform.position + new Vector3(0, 20f);
             }
-
-            gameController = new GameController(players);
-            gameController.StartGame();
         }
-
+        GameController gameController = Instantiate(gameControllerPrefab);
+        Instantiate(windControllerPrefab);
+        gameController.StartGame(players);
     }
 
     private IEnumerator EnableLoadingScreen()
     {
-        //Òóò âêëþ÷àåì çàãðóçî÷íûé ýêðàí
+        //Ð’ÐºÐ»ÑŽÑ‡Ð°ÐµÐ¼ ÑÐºÑ€Ð°Ð½ Ð·Ð°Ð³Ñ€ÑƒÐ·ÐºÐ¸
         yield return new WaitForSeconds(2);
-        //Òóò åãî âûêëþ÷àåì
+        //Ð’Ñ‹ÐºÐ»ÑŽÑ‡Ð°ÐµÐ¼ ÑÐºÑ€Ð°Ð½ Ð·Ð°Ð³Ñ€ÑƒÐ·ÐºÐ¸
     }
 }
 
