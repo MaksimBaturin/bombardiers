@@ -265,6 +265,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1758234459}
+  - component: {fileID: 1758234460}
   m_Layer: 0
   m_Name: Bootstrap
   m_TagString: Untagged
@@ -287,6 +288,24 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1758234460
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1758234458}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ae4c75c6ecadc741bf7398b82bc4e17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tankPrefab: {fileID: 7797360099087133800, guid: 1eea3b33f6482cd43bc9f890246a4a4c, type: 3}
+  terrainPrefab: {fileID: 4779342314152993928, guid: cfa7391de9870124492041d8557ae0aa, type: 3}
+  inGameUIPrefab: {fileID: 826492186091447438, guid: 9ffa3607b3c815643b434d48688d9766, type: 3}
+  tankControllerPrefab: {fileID: 8392489980271281970, guid: b898f409fa8bef64fb9f922cf6f3ba96, type: 3}
+  gameControllerPrefab: {fileID: 1716189283334336871, guid: 66a49e47827d2f642be6650bc7df2a6c, type: 3}
+  windControllerPrefab: {fileID: 7458685603321985179, guid: 1741a2d974a8a8e4d9aa34120a140b4d, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

@@ -6,11 +6,10 @@ public class GameController: MonoBehaviour
 {
     private List<Player> playersTurnQueue;
     private Player currentPlayer;
-    private TankController tankController;
     //private UIController uiController;
     
     private int windTurnCounter;
-    public GameController Instance { get; private set; }
+    public static GameController Instance { get; private set; }
     public void Awake()
     {
         Instance = this;
@@ -22,12 +21,12 @@ public class GameController: MonoBehaviour
         ShufflePlayersTurn();
             
         currentPlayer = playersTurnQueue[0];
-        tankController.Tank = currentPlayer.tank.GetComponent<TankModel>();
-        
+        TankController.Instance.Tank = currentPlayer.Tank;
+      
         //uiController - показываем чей ход
     }
 
-    private void changePlayerTurn()
+    public void changePlayerTurn()
     {
         int currentPlayerIndex = playersTurnQueue.IndexOf(currentPlayer);
         int nextPlayerIndex;
@@ -40,7 +39,7 @@ public class GameController: MonoBehaviour
             nextPlayerIndex = currentPlayerIndex + 1;
         }
         currentPlayer = playersTurnQueue[nextPlayerIndex];
-        
+        TankController.Instance.Tank = currentPlayer.Tank;
         //показываем чей ход и меняем ветер
         Debug.Log($"Ход игрока: {currentPlayer.name}");
     }

@@ -65,7 +65,7 @@ namespace Game.Scripts
 
         public void Die()
         {
-            
+            OnDeath.Invoke();
             Destroy(gameObject);
         }
         
