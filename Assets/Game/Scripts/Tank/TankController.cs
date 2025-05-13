@@ -99,6 +99,7 @@ namespace Game.Scripts
                     newProjectile.onDeathEvent += onBulletDeath;
                     newProjectile.LaunchAtAngle(tankGunRotator.gun.transform.rotation.eulerAngles.z, tank.MaxShootForce * tank.CurrentShootPower);
                     EnableAction = false;
+                    IsScopeActive = false;
                 }
             }
         }

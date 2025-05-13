@@ -54,9 +54,9 @@ public class Bootstrap: MonoBehaviour
 
             if (hit)
             { 
-                players[i].tank = Instantiate(tankPrefab).GetComponent<TankModel>();
-                Debug.Log(players[i].tank.gameObject.GetInstanceID());
-                players[i].tank.transform.position = hit.point + new Vector2(0, 30f);
+                players[i].Tank = Instantiate(tankPrefab).GetComponent<TankModel>();
+                Debug.Log(players[i].Tank.gameObject.GetInstanceID());
+                players[i].Tank.transform.position = hit.point + new Vector2(0, 30f);
             }
         }
         GameController gameController = Instantiate(gameControllerPrefab);

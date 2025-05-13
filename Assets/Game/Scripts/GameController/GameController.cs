@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Linq;
 using Game.Scripts;
 
 public class GameController: MonoBehaviour
@@ -28,19 +29,34 @@ public class GameController: MonoBehaviour
 
     public void changePlayerTurn()
     {
+        var alivePlayers = playersTurnQueue.Where(p => p.isAlive).ToList();
+        
+        if (alivePlayers.Count == 1)
+        {
+            Debug.Log($"Игрок {alivePlayers[0].name} победил!");
+                
+            return;
+        }
+        
         int currentPlayerIndex = playersTurnQueue.IndexOf(currentPlayer);
-        int nextPlayerIndex;
-        if (currentPlayerIndex == playersTurnQueue.Count - 1)
+        int nextPlayerIndex = currentPlayerIndex;
+        int attempts = 0;
+        
+        do
         {
-            nextPlayerIndex = 0;
+            nextPlayerIndex = (nextPlayerIndex + 1) % playersTurnQueue.Count;
+            attempts++;
+            
+            if (attempts > playersTurnQueue.Count * 2)
+            {
+                Debug.LogError("Не удалось найти следующего живого игрока!");
+                return;
+            }
         }
-        else
-        {
-            nextPlayerIndex = currentPlayerIndex + 1;
-        }
+        while (!playersTurnQueue[nextPlayerIndex].isAlive);
+        
         currentPlayer = playersTurnQueue[nextPlayerIndex];
         TankController.Instance.Tank = currentPlayer.Tank;
-        //показываем чей ход и меняем ветер
         Debug.Log($"Ход игрока: {currentPlayer.name}");
     }
     
