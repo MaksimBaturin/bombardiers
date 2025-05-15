@@ -2,8 +2,7 @@ using System.Collections;
 using UnityEngine;
 using Random = UnityEngine.Random;
 using Game.Scripts;
-using Unity.VisualScripting;
-using System.Runtime.InteropServices.WindowsRuntime;
+
 public class Bootstrap: MonoBehaviour
 {
     [SerializeField] private GameObject tankPrefab;
@@ -73,7 +72,7 @@ public class Bootstrap: MonoBehaviour
     }
 }
 
-public struct Player
+public class Player
 {
     public string name;
     public Color color;
@@ -83,6 +82,10 @@ public struct Player
         get => tank; 
         set
         {
+            if (value == null)
+            {
+                tank.OnDeath -=TankDeath;
+            }
             tank = value;
             if (tank != null)
             {
@@ -97,11 +100,12 @@ public struct Player
         this.name = name;
         this.color = color;
         this.tank = null;
-        isAlive = true;
+        this.isAlive = true;
     }
 
     private void TankDeath()
     {
+        Tank = null;
         isAlive = false;
     }
 }

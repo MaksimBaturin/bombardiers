@@ -99,6 +99,13 @@ public class Projectile : MonoBehaviour
     // Когда пуля сталкивается с любым объектом
     private void OnTriggerEnter2D(Collider2D other)
     {
+        IHealth obj;
+
+        if (other.gameObject.TryGetComponent<IHealth>(out obj))
+        {
+            obj.TakeDamage(damage);
+        }
+        onDeathEvent.Invoke();
         onDeathEvent.Invoke();
         Destroy(gameObject);
     }

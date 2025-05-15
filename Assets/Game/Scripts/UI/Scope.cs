@@ -28,7 +28,12 @@ namespace Game.Scripts.UI
         private void Start()
         {
             gun = tankGunRotator.gun;
-
+            float InitPower = tankGunRotator.GetComponent<TankModel>().CurrentShootPower;
+            RectTransform pointerRect = pointer.GetComponent<RectTransform>();
+            pointerRect.sizeDelta = new Vector2(
+                initialPointerWidth * InitPower,
+                pointerRect.sizeDelta.y
+            );
         }
 
         private void Update()

@@ -29,8 +29,13 @@ public class GameController: MonoBehaviour
 
     public void changePlayerTurn()
     {
-        var alivePlayers = playersTurnQueue.Where(p => p.isAlive).ToList();
-        
+        List<Player> alivePlayers = new List<Player>(playersTurnQueue.Count);
+        foreach (Player player in playersTurnQueue)
+        {
+            if (player.isAlive) alivePlayers.Add(player);
+        }
+        foreach (Player player in alivePlayers) Debug.Log($"name: {player.name}");
+
         if (alivePlayers.Count == 1)
         {
             Debug.Log($"Игрок {alivePlayers[0].name} победил!");
@@ -69,12 +74,6 @@ public class GameController: MonoBehaviour
             Player temp = playersTurnQueue[i];
             playersTurnQueue[i] = playersTurnQueue[randomIndex];
             playersTurnQueue[randomIndex] = temp;
-        }
-        
-        Debug.Log("Players turn order after shuffling:");
-        foreach (Player player in playersTurnQueue)
-        {
-            Debug.Log(player.name);
         }
     }
 }

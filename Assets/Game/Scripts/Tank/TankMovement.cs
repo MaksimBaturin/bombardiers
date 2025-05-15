@@ -66,8 +66,8 @@ namespace Game.Scripts
             RaycastHit2D hitRight;
             RaycastHit2D hitLeft;
 
-            Debug.DrawRay(GroundCheckLeft.transform.position, GroundCheckLeft.transform.TransformDirection(Vector2.down) * 0.1f, Color.red);
-            Debug.DrawRay(GroundCheckRight.transform.position, GroundCheckRight.transform.TransformDirection(Vector2.down) * 0.1f, Color.red);
+            //Debug.DrawRay(GroundCheckLeft.transform.position, GroundCheckLeft.transform.TransformDirection(Vector2.down) * 0.1f, Color.red);
+            //Debug.DrawRay(GroundCheckRight.transform.position, GroundCheckRight.transform.TransformDirection(Vector2.down) * 0.1f, Color.red);
 
             hitLeft = Physics2D.Raycast(GroundCheckLeft.transform.position, GroundCheckLeft.transform.TransformDirection(Vector2.down), 0.1f, LayerMask.GetMask("Ground"));
             hitRight = Physics2D.Raycast(GroundCheckRight.transform.position, GroundCheckRight.transform.TransformDirection(Vector2.down), 0.1f, LayerMask.GetMask("Ground"));
@@ -82,11 +82,11 @@ namespace Game.Scripts
             if (direction == Vector2.left) rayPos = AngleCheckLeft.transform.position;
             else rayPos = AngleCheckRight.transform.position;
 
-            Debug.DrawRay(rayPos, direction * 0.5f, Color.red);
+            //Debug.DrawRay(rayPos, direction * 0.5f, Color.red);
 
             hit = Physics2D.Raycast(rayPos, direction, 0.5f, LayerMask.GetMask("Ground"));
 
-            Debug.Log(Vector2.Angle(hit.normal, direction) - 90f);
+            //Debug.Log(Vector2.Angle(hit.normal, direction) - 90f);
             if (hit.collider) return Vector2.Angle(hit.normal, direction) - 90f;
             
             else return 0f;
@@ -95,7 +95,7 @@ namespace Game.Scripts
         private bool IsTurnedOver()
         {
             RaycastHit2D hit;
-            Debug.DrawRay(TurnedOverCheck.transform.position, TurnedOverCheck.transform.TransformDirection(Vector2.up) * 1f, Color.red);
+            //Debug.DrawRay(TurnedOverCheck.transform.position, TurnedOverCheck.transform.TransformDirection(Vector2.up) * 1f, Color.red);
             hit = Physics2D.Raycast(TurnedOverCheck.transform.position, TurnedOverCheck.transform.TransformDirection(Vector2.up), 1f, LayerMask.GetMask("Ground"));
             return hit.collider != null;
         }

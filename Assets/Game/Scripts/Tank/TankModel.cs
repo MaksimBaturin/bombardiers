@@ -48,6 +48,7 @@ namespace Game.Scripts
         {
             tankMovement.AllowedAngle = AllowedAngleToRide;
             currentHealth = maxHealth;
+            CurrentShootPower = 1;
         }
         
         public void ConsumeFuel()
@@ -59,7 +60,7 @@ namespace Game.Scripts
         public void TakeDamage(float damage)
         {
             currentHealth -= damage;
-            Debug.Log($"damage: {damage}, health: {currentHealth}");
+            //Debug.Log($"damage: {damage}, health: {currentHealth}");
             if (currentHealth <= 0) Die();
         }
 
