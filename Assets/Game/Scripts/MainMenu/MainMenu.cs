@@ -1,13 +1,10 @@
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class MainMenu : MonoBehaviour
 {
-    public void Start_OnClick()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-    }
-
     public void Quit_OnClick()
     {
         Debug.Log("Closed");

@@ -9,6 +9,8 @@ public class Bootstrap: MonoBehaviour
     [SerializeField] private GameObject terrainPrefab;
     [SerializeField] private GameObject inGameUIPrefab;
     [SerializeField] private GameObject tankControllerPrefab;
+    [SerializeField] private GameObject MainMenuPrefab;
+    [SerializeField] private GameObject EventPrefab;
     [SerializeField] private GameController gameControllerPrefab;
     [SerializeField] private WindController windControllerPrefab;
     
@@ -33,10 +35,14 @@ public class Bootstrap: MonoBehaviour
 
     public void GameInit(Player[] players)
     {
-
+        
         StartCoroutine(EnableLoadingScreen());
-
+        
+        Instantiate(EventPrefab);
+        Instantiate(MainMenuPrefab);
+        
         Instantiate(terrainPrefab);
+        
 
         for (int i = 0; i < players.Length; i++)
         {
