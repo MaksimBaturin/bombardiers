@@ -302,7 +302,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tankPrefab: {fileID: 7797360099087133800, guid: 1eea3b33f6482cd43bc9f890246a4a4c, type: 3}
   terrainPrefab: {fileID: 4779342314152993928, guid: cfa7391de9870124492041d8557ae0aa, type: 3}
-  inGameUIPrefab: {fileID: 826492186091447438, guid: 9ffa3607b3c815643b434d48688d9766, type: 3}
+  inGameUIPrefab: {fileID: 8118484890213620177, guid: ee46b4683aba87642bf965bee26695d5, type: 3}
   tankControllerPrefab: {fileID: 8392489980271281970, guid: b898f409fa8bef64fb9f922cf6f3ba96, type: 3}
   MainMenuPrefab: {fileID: 7975679265281912868, guid: f574d0d8674e73a4595e5dc115e77881, type: 3}
   EventPrefab: {fileID: 7158314584547445125, guid: 2e07a79bc9f7fe94691983b3d1e18c70, type: 3}
