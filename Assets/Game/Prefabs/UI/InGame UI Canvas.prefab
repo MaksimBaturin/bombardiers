@@ -1121,7 +1121,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &7094949150030598942
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1151,8 +1151,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a5cbb0a833f96a4687fb510162000a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PauseGame: 0
+  PauseGame: 1
   PauseGameMenu: {fileID: 8694422616926323644}
+  Mainmenu: {fileID: 7975679265281912868, guid: f574d0d8674e73a4595e5dc115e77881, type: 3}
 --- !u!114 &431864549539428679
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1165,11 +1166,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f39e8610cf7bab4438ab46d055252b63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Health: {fileID: 0}
+  Tank: {fileID: 8196398653237468680, guid: 1eea3b33f6482cd43bc9f890246a4a4c, type: 3}
   imgObj: {fileID: 5021781236832749000}
   spriteImage: {fileID: 2408666096652550136, guid: 06948cf7faac7e844b8ca781dc2cc6a7, type: 3}
   healthText: {fileID: 5445683793996962744}
-  healthPercentage: 100
 --- !u!1 &8196309536843715504
 GameObject:
   m_ObjectHideFlags: 0

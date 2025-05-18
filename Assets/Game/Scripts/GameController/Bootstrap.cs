@@ -40,7 +40,9 @@ public class Bootstrap: MonoBehaviour
         
         Instantiate(EventPrefab);
         Instantiate(MainMenuPrefab);
-        
+        GameObject inGameUI = Instantiate(inGameUIPrefab);
+ 
+
         Instantiate(terrainPrefab);
         
 
@@ -65,7 +67,7 @@ public class Bootstrap: MonoBehaviour
             }
         }
         GameController gameController = Instantiate(gameControllerPrefab);
-        Instantiate(tankControllerPrefab).GetComponent<TankController>().UITransform = Instantiate(inGameUIPrefab).transform;
+        Instantiate(tankControllerPrefab).GetComponent<TankController>().UITransform = inGameUI.transform;
         Instantiate(windControllerPrefab);
         gameController.StartGame(players);
     }

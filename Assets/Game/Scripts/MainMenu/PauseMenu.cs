@@ -3,8 +3,9 @@ using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
 {
-    public bool PauseGame;
+    public bool PauseGame = false;
     public GameObject PauseGameMenu;
+    public GameObject Mainmenu;
 
     void Update()
     {
@@ -26,6 +27,7 @@ public class PauseMenu : MonoBehaviour
         PauseGameMenu.SetActive(false);
         Time.timeScale = 1.0f;
         PauseGame = false;
+        Debug.Log("Game Paused! TimeScale: " + Time.timeScale); // Должно быть 0
 
     }
     public void Pause()
@@ -33,10 +35,13 @@ public class PauseMenu : MonoBehaviour
         PauseGameMenu.SetActive(true);
         Time.timeScale = 0f;
         PauseGame = true;
+        Debug.Log("Game Paused! TimeScale: " + Time.timeScale); // Должно быть 0
     }
     public void LoadMenu()
     {
+        PauseGame = false;
+        PauseGameMenu.SetActive(false);
+        Mainmenu.SetActive(true);
         Time.timeScale = 1.0f;
-        SceneManager.LoadScene("MainMenuScene");
     }
 }
