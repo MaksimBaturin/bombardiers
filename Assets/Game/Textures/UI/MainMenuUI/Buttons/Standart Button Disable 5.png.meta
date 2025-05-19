@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 87c66198337b824409580c5b73ccff89
+guid: a0bdb5bd2620dcb4180452ea3430921e
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -634429495937823471
-    second: Standart Button Normal 5_0
+      213: -4785557368491792256
+    second: Standart Button Disable 5_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -110,7 +110,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 4
-    buildTarget: WebGL
+    buildTarget: WindowsStoreApps
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -126,7 +126,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Standart Button Normal 5_0
+      name: Standart Button Disable 5_0
       rect:
         serializedVersion: 2
         x: 0
@@ -141,8 +141,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 11d889b1cbd0237f0800000000000000
-      internalID: -634429495937823471
+      spriteID: 0882bc6ade8469db0800000000000000
+      internalID: -4785557368491792256
       vertices: []
       indices: 
       edges: []
@@ -161,7 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Standart Button Normal 5_0: -634429495937823471
+      Standart Button Disable 5_0: -4785557368491792256
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

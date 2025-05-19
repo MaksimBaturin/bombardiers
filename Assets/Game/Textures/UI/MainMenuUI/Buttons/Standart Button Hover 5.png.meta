@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 4f3bbecd6da7cfd48bc80b0b7ffcdef9
+guid: b839c2128c6b2a44889f4ecce3519dd7
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 2796243753639829985
-    second: Custom Button Normal 2_0
+      213: -124789986024887644
+    second: Standart Button Hover 5_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -110,19 +110,6 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 4
-    buildTarget: WebGL
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
     buildTarget: WindowsStoreApps
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -139,13 +126,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Custom Button Normal 2_0
+      name: Standart Button Hover 5_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 61
-        height: 61
+        width: 194
+        height: 45
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -154,8 +141,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 1e16b19f0e04ec620800000000000000
-      internalID: 2796243753639829985
+      spriteID: 4aae57b3b28a44ef0800000000000000
+      internalID: -124789986024887644
       vertices: []
       indices: 
       edges: []
@@ -174,7 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Custom Button Normal 2_0: 2796243753639829985
+      Standart Button Hover 5_0: -124789986024887644
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
