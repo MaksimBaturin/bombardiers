@@ -28,6 +28,8 @@ public class Projectile : MonoBehaviour
 
     public event Action onDeathEvent;
 
+    public GameObject owner;
+
     protected virtual void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -83,7 +85,7 @@ public class Projectile : MonoBehaviour
         currentPosition = nextPosition;
 
         rb.MovePosition(currentPosition);
-        Debug.Log($"[Projectile] Wind force: {windForce}");
+        //Debug.Log($"[Projectile] Wind force: {windForce}");
 
 
 
@@ -101,11 +103,11 @@ public class Projectile : MonoBehaviour
     {
         IHealth obj;
 
-        if (other.gameObject.TryGetComponent<IHealth>(out obj))
+        if (other.gameObject.TryGetComponent<IHealth>(out obj) && owner.gameObject != other.gameObject)
         {
             obj.TakeDamage(damage);
         }
-        onDeathEvent.Invoke();
+
         onDeathEvent.Invoke();
         Destroy(gameObject);
     }
@@ -114,7 +116,8 @@ public class Projectile : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         IHealth obj;
-
+        
+        Debug.Log(collision.gameObject.GetInstanceID()+" " + owner.gameObject.GetInstanceID());
         if (collision.gameObject.TryGetComponent<IHealth>(out obj))
         {
             obj.TakeDamage(damage);
