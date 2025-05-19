@@ -59,13 +59,15 @@ namespace Game.Scripts
         public static TankController Instance { get; private set; }
 
         private bool EnableAction = true;
+        
+        private bool IsPaused = false;
         private void Awake()
         {
             Instance = this;
         }
         private void Update()
         {
-            if (EnableAction)
+            if (EnableAction && !IsPaused)
             {
                 if (Input.GetKey(KeyCode.D))
                 {
@@ -97,7 +99,9 @@ namespace Game.Scripts
                         Quaternion.identity
                     );
                     newProjectile.onDeathEvent += onBulletDeath;
+                    newProjectile.owner = tank.gameObject;
                     newProjectile.LaunchAtAngle(tankGunRotator.gun.transform.rotation.eulerAngles.z, tank.MaxShootForce * tank.CurrentShootPower);
+                    newProjectile.transform.parent = transform;
                     EnableAction = false;
                     IsScopeActive = false;
                 }
@@ -113,15 +117,16 @@ namespace Game.Scripts
             }
         }
 
-        public void FlipTank()
+        public void OnPause(bool pause)
         {
-            tankMovement.FlipTank();
+            IsPaused = pause;
+            if (scope) scope.enabled = !pause;
         }
 
         private void onBulletDeath()
         {
             GameController.Instance.changePlayerTurn();
         }
-
+        
     }
 }

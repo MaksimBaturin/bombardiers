@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -6,7 +7,7 @@ public class PauseMenu : MonoBehaviour
     public bool PauseGame = false;
     public GameObject PauseGameMenu;
     public GameObject MainMenupref;
-
+    public Action<bool> OnPause;
     void Update()
     {
         if(Input.GetKeyDown(KeyCode.Escape))
@@ -27,7 +28,8 @@ public class PauseMenu : MonoBehaviour
         PauseGameMenu.SetActive(false);
         Time.timeScale = 1.0f;
         PauseGame = false;
-        Debug.Log("Game Paused! TimeScale: " + Time.timeScale); // Должно быть 0
+        OnPause?.Invoke(PauseGame);
+        Debug.Log("Game Paused! TimeScale: " + Time.timeScale); // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ 0
 
     }
     public void Pause()
@@ -35,10 +37,12 @@ public class PauseMenu : MonoBehaviour
         PauseGameMenu.SetActive(true);
         Time.timeScale = 0f;
         PauseGame = true;
-        Debug.Log("Game Paused! TimeScale: " + Time.timeScale); // Должно быть 0
+        OnPause?.Invoke(PauseGame);
+        Debug.Log("Game Paused! TimeScale: " + Time.timeScale); // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ 0
     }
     public void LoadMenu()
     {
+        Bootstrap.Instance.UnloadGame();
         PauseGame = false;
         PauseGameMenu.SetActive(false);
         Instantiate(MainMenupref);

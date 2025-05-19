@@ -3,16 +3,20 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 using Game.Scripts;
 
+
 public class Bootstrap: MonoBehaviour
 {
     [SerializeField] private GameObject tankPrefab;
     [SerializeField] private GameObject terrainPrefab;
     [SerializeField] private GameObject inGameUIPrefab;
-    [SerializeField] private GameObject tankControllerPrefab;
+    [SerializeField] private TankController tankControllerPrefab;
     [SerializeField] private GameObject MainMenuPrefab;
+    [SerializeField] private GameObject GlobalUIPrefab;
     [SerializeField] private GameObject EventPrefab;
     [SerializeField] private GameController gameControllerPrefab;
     [SerializeField] private WindController windControllerPrefab;
+
+    private System.Collections.Generic.List<GameObject> gameObjects = new System.Collections.Generic.List<GameObject>();
     
     public static Bootstrap Instance { get; private set; }
 
@@ -23,14 +27,21 @@ public class Bootstrap: MonoBehaviour
 
     private void Start()
     {
-        Player[] players =
-        {
-            new Player("Maxon", Color.red),
-            new Player("Asan", Color.blue),
-            new Player("Skiba", Color.green),
-        };
+        MainMenuInit();
+    }
 
-        GameInit(players);
+    public void MainMenuInit()
+    {
+        Instantiate(EventPrefab);
+        Instantiate(MainMenuPrefab);
+    }
+
+    public void UnloadGame()
+    {
+        foreach (GameObject obj in gameObjects)
+        {
+            Destroy(obj?.gameObject);
+        }
     }
 
     public void GameInit(Player[] players)
@@ -38,12 +49,13 @@ public class Bootstrap: MonoBehaviour
         
         StartCoroutine(EnableLoadingScreen());
         
-        Instantiate(EventPrefab);
-        Instantiate(MainMenuPrefab);
         GameObject inGameUI = Instantiate(inGameUIPrefab);
- 
+        gameObjects.Add(inGameUI);
+        
+        GameObject globalUI = Instantiate(GlobalUIPrefab);
+        gameObjects.Add(globalUI);
 
-        Instantiate(terrainPrefab);
+        gameObjects.Add(Instantiate(terrainPrefab));
         
 
         for (int i = 0; i < players.Length; i++)
@@ -62,13 +74,22 @@ public class Bootstrap: MonoBehaviour
             if (hit)
             { 
                 players[i].Tank = Instantiate(tankPrefab).GetComponent<TankModel>();
+                gameObjects.Add(players[i].Tank.gameObject);
                 Debug.Log(players[i].Tank.gameObject.GetInstanceID());
                 players[i].Tank.transform.position = hit.point + new Vector2(0, 30f);
             }
         }
         GameController gameController = Instantiate(gameControllerPrefab);
-        Instantiate(tankControllerPrefab).GetComponent<TankController>().UITransform = inGameUI.transform;
-        Instantiate(windControllerPrefab);
+        gameObjects.Add(gameController.gameObject);
+        
+        TankController tankController = Instantiate(tankControllerPrefab);
+        tankController.UITransform = inGameUI.transform;
+        gameObjects.Add(tankController.gameObject);
+        globalUI.GetComponent<PauseMenu>().OnPause += tankController.OnPause;
+        
+        WindController windController = Instantiate(windControllerPrefab);
+        gameObjects.Add(windController.gameObject);
+        
         gameController.StartGame(players);
     }
 

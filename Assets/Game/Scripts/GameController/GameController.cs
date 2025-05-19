@@ -9,7 +9,9 @@ public class GameController: MonoBehaviour
     private Player currentPlayer;
     //private UIController uiController;
     
-    private int windTurnCounter;
+    private int windTurnCounter = 0;
+    [SerializeField] private int maxWindTurnCount = 2;
+    [SerializeField] private int MaxWindForce;
     public static GameController Instance { get; private set; }
     public void Awake()
     {
@@ -63,6 +65,16 @@ public class GameController: MonoBehaviour
         currentPlayer = playersTurnQueue[nextPlayerIndex];
         TankController.Instance.Tank = currentPlayer.Tank;
         Debug.Log($"Ход игрока: {currentPlayer.name}");
+
+        windTurnCounter++;
+        if (windTurnCounter > maxWindTurnCount) windTurnCounter = 0;
+        //ui вызываем ветер
+        System.Random rnd = new System.Random();
+        float windForce = rnd.Next(1, MaxWindForce);
+        int windDir = rnd.Next(0, 1);
+        WindController.Instance.windStrength = windForce;
+        if (windDir == 0) WindController.Instance.windDirection = -1;
+        else WindController.Instance.windDirection = 1;
     }
     
     private void ShufflePlayersTurn()
