@@ -5,7 +5,7 @@ public class PauseMenu : MonoBehaviour
 {
     public bool PauseGame = false;
     public GameObject PauseGameMenu;
-    public GameObject Mainmenu;
+    public GameObject MainMenupref;
 
     void Update()
     {
@@ -41,7 +41,7 @@ public class PauseMenu : MonoBehaviour
     {
         PauseGame = false;
         PauseGameMenu.SetActive(false);
-        Mainmenu.SetActive(true);
+        Instantiate(MainMenupref);
         Time.timeScale = 1.0f;
     }
 }
