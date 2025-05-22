@@ -9,8 +9,9 @@ public class Projectile : MonoBehaviour
 
     [Header("Физические параметры")]
     public float mass = 1f;
-    public float airResistance = 0.1f;
     public float gravityScale = 1f;
+    public float dragCoefficient = 0.47f; // Коэффициент лобового сопротивления (Cd)
+    public float crossSectionArea = 0.1f; // Площадь поперечного сечения (м²)
 
     [Header("Сила выстрела")]
     public float minForce = 1f;
@@ -25,6 +26,11 @@ public class Projectile : MonoBehaviour
 
     private bool isLaunched = false;
     private Rigidbody2D rb;
+
+    // Параметры атмосферы
+    private const float AirDensitySeaLevel = 1.225f; // кг/м³ (плотность воздуха на уровне моря)
+    private const float ScaleHeight = 8500f; // м (масштабная высота)
+
 
     public event Action onDeathEvent;
 
@@ -60,6 +66,12 @@ public class Projectile : MonoBehaviour
         //Debug.Log($"[Projectile] Запуск: сила={clampedForce}, масштаб={forceScale}, импульс={externalForce}");
     }
 
+    private float GetAirDensity(float height)
+    {
+        // Экспоненциальное убывание плотности воздуха с высотой
+        return AirDensitySeaLevel * Mathf.Exp(-height / ScaleHeight);
+    }
+
     protected virtual void FixedUpdate()
     {
         if (!isLaunched) return;
@@ -67,15 +79,17 @@ public class Projectile : MonoBehaviour
         Vector2 velocity = (currentPosition - previousPosition) / Time.fixedDeltaTime;
         Vector2 windForce = WindController.GetWindForce();
 
-
         // 1. Сила притяжения
         Vector2 gravity = new Vector2(0f, -9.81f) * gravityScale * mass;
 
-        // 2. Сила сопротивления 
-        Vector2 airDrag = -airResistance * velocity;
-
+        // 2. Физически корректное сопротивление воздуха
+        float height = currentPosition.y;
+        float airDensity = GetAirDensity(height);
+        float speed = velocity.magnitude;
+        Vector2 dragForce = -0.5f * dragCoefficient * airDensity * speed * velocity * crossSectionArea;
+        //Debug.Log($"Сила сопротивления {dragForce}");
         // 3. Прикладная сила 
-        Vector2 netForce = gravity + airDrag + windForce;
+        Vector2 netForce = gravity + dragForce + windForce;
         Vector2 acceleration = netForce / mass;
 
         // Верле-интеграция
@@ -85,18 +99,13 @@ public class Projectile : MonoBehaviour
         currentPosition = nextPosition;
 
         rb.MovePosition(currentPosition);
-        //Debug.Log($"[Projectile] Wind force: {windForce}");
-
-
 
         // Поворот по направлению скорости
-        if (velocity.sqrMagnitude > 0.0001f) 
+        if (velocity.sqrMagnitude > 0.0001f)
         {
             float angleDeg = Mathf.Atan2(velocity.y, velocity.x) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.AngleAxis(angleDeg, Vector3.forward);
         }
-
-        //Debug.Log($"[Projectile] Позиция: {currentPosition:F3}, Скорость: {velocity:F3}, Ускорение: {acceleration:F3}");
     }
     // Когда пуля сталкивается с любым объектом
     private void OnTriggerEnter2D(Collider2D other)
