@@ -32,7 +32,7 @@ public class Bootstrap: MonoBehaviour
 
     public void MainMenuInit()
     {
-        Instantiate(EventPrefab);
+        //Instantiate(EventPrefab);
         Instantiate(MainMenuPrefab);
     }
 

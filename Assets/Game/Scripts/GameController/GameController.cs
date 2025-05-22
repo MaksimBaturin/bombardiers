@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 using Game.Scripts;
+using Unity.VisualScripting;
 
 public class GameController: MonoBehaviour
 {
@@ -25,7 +26,9 @@ public class GameController: MonoBehaviour
             
         currentPlayer = playersTurnQueue[0];
         TankController.Instance.Tank = currentPlayer.Tank;
-      
+
+        CalculateWind();
+        windTurnCounter++;
         //uiController - показываем чей ход
     }
 
@@ -67,16 +70,24 @@ public class GameController: MonoBehaviour
         Debug.Log($"Ход игрока: {currentPlayer.name}");
 
         windTurnCounter++;
-        if (windTurnCounter > maxWindTurnCount) windTurnCounter = 0;
-        //ui вызываем ветер
-        System.Random rnd = new System.Random();
-        float windForce = rnd.Next(1, MaxWindForce);
-        int windDir = rnd.Next(0, 1);
-        WindController.Instance.windStrength = windForce;
-        if (windDir == 0) WindController.Instance.windDirection = -1;
-        else WindController.Instance.windDirection = 1;
+        if (windTurnCounter > maxWindTurnCount)
+        {
+            windTurnCounter = 0;
+            CalculateWind();
+        }
+        
     }
     
+    private void CalculateWind()
+    {
+        System.Random rnd = new System.Random();
+        float windForce = rnd.Next(0, MaxWindForce+1);
+        int windDir = rnd.Next(0, 2);
+        WindController.Instance.windStrength = windForce/5;
+        if (windDir == 0) WindController.Instance.windDirection = -1;
+        else WindController.Instance.windDirection = 1;
+        Debug.Log("ветер: " + WindController.Instance.windDirection * WindController.Instance.windStrength);
+    }
     private void ShufflePlayersTurn()
     {
         for (int i = playersTurnQueue.Count - 1; i > 0; i--)

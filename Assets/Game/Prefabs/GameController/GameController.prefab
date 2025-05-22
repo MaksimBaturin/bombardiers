@@ -44,3 +44,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 616fe39c1a9a3ba488985c89dc26a766, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxWindTurnCount: 2
+  MaxWindForce: 5
