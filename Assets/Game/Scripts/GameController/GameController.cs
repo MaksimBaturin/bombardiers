@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Game.Scripts;
 using Unity.VisualScripting;
+using UnityEditor.Rendering;
 
 public class GameController: MonoBehaviour
 {
@@ -84,9 +85,12 @@ public class GameController: MonoBehaviour
         float windForce = rnd.Next(0, MaxWindForce+1);
         int windDir = rnd.Next(0, 2);
         WindController.Instance.windStrength = windForce/5;
-        if (windDir == 0) WindController.Instance.windDirection = -1;
-        else WindController.Instance.windDirection = 1;
-        Debug.Log("ветер: " + WindController.Instance.windDirection * WindController.Instance.windStrength);
+        if (windDir == 0) windDir = -1;
+        else windDir = 1;
+        WindController.Instance.windDirection = windDir;
+        
+        Debug.Log("ветер: " + WindController.Instance.windDirection * windForce);
+        GameUI.Instance.ChangeWindDirection(windForce, windDir);
     }
     private void ShufflePlayersTurn()
     {
