@@ -141,8 +141,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 2408666096652550136, guid: 06948cf7faac7e844b8ca781dc2cc6a7, type: 3}
-  m_Type: 0
+  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -447,7 +447,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &7094949150030598942
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -477,11 +477,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f39e8610cf7bab4438ab46d055252b63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Health: {fileID: 0}
+  tank: {fileID: 0}
   imgObj: {fileID: 5021781236832749000}
-  spriteImage: {fileID: 2408666096652550136, guid: 06948cf7faac7e844b8ca781dc2cc6a7, type: 3}
   healthText: {fileID: 5445683793996962744}
-  healthPercentage: 100
+  offsetY: 2
   HealthBarPanel: {fileID: 8994790262172872910}
 --- !u!1 &8994790262172872910
 GameObject:
