@@ -24,7 +24,7 @@ namespace Game.Scripts
         public float Fuel { get => fuel; private set => fuel = value; }
         [SerializeField] private float fuelConsumption;
 
-        [SerializeField] private float maxHealth;
+        [SerializeField] public float maxHealth;
 
         [SerializeField] public float MaxShootForce;
 

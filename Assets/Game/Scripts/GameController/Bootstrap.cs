@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using Random = UnityEngine.Random;
 using Game.Scripts;
+using static UnityEditor.U2D.ScriptablePacker;
 
 
 public class Bootstrap: MonoBehaviour
@@ -72,11 +73,14 @@ public class Bootstrap: MonoBehaviour
             RaycastHit2D hit = Physics2D.Raycast(new Vector2(positionX, positionY), -Vector2.up, 500, LayerMask.GetMask("Ground"));
 
             if (hit)
-            { 
+            {
                 players[i].Tank = Instantiate(tankPrefab).GetComponent<TankModel>();
                 gameObjects.Add(players[i].Tank.gameObject);
                 Debug.Log(players[i].Tank.gameObject.GetInstanceID());
                 players[i].Tank.transform.position = hit.point + new Vector2(0, 30f);
+
+                // Создаем HealthBar для танка
+                CreateTankHealthBar(players[i].Tank, players[i].color);
             }
         }
         GameController gameController = Instantiate(gameControllerPrefab);
@@ -91,6 +95,24 @@ public class Bootstrap: MonoBehaviour
         gameObjects.Add(windController.gameObject);
         
         gameController.StartGame(players);
+    }
+
+    private void CreateTankHealthBar(TankModel tank, Color playerColor)
+    {
+        GameObject healthBarObj = Instantiate(inGameUIPrefab);
+        healthBarObj.transform.SetParent(tank.transform);
+
+        healthBarObj.transform.localScale = Vector3.one * 0.05f;
+
+        HealthBar healthBar = healthBarObj.GetComponent<HealthBar>();
+        if (healthBar != null)
+        {
+            healthBar.tank = tank; // Привязываем танк к HealthBar
+            healthBar.imgObj.color = playerColor;
+            healthBar.Active();
+        }
+
+        gameObjects.Add(healthBarObj);
     }
 
     private IEnumerator EnableLoadingScreen()
