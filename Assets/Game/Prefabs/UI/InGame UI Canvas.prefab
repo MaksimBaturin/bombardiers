@@ -482,6 +482,7 @@ MonoBehaviour:
   spriteImage: {fileID: 2408666096652550136, guid: 06948cf7faac7e844b8ca781dc2cc6a7, type: 3}
   healthText: {fileID: 5445683793996962744}
   healthPercentage: 100
+  HealthBarPanel: {fileID: 8994790262172872910}
 --- !u!1 &8994790262172872910
 GameObject:
   m_ObjectHideFlags: 0
@@ -519,8 +520,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 321, y: 241.2}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 50}
+  m_SizeDelta: {x: 0, y: -100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7696222975256597778
 CanvasRenderer:
