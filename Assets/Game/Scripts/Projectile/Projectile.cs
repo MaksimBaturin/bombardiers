@@ -5,17 +5,17 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     [Header("Глобальный множитель сил")]
-    public float forceScale = 2f;  // Корректнуть надо
+    public float forceScale = 5f;  // Корректнуть надо
 
     [Header("Физические параметры")]
     public float mass = 1f;
-    public float gravityScale = 1f;
-    public float dragCoefficient = 0.47f; // Коэффициент лобового сопротивления (Cd)
-    public float crossSectionArea = 0.1f; // Площадь поперечного сечения (м²)
+    public float gravityScale = 0.05f;
+    public float dragCoefficient = 0.05f; // Коэффициент лобового сопротивления (Cd)
+    public float crossSectionArea = 0.01f; // Площадь поперечного сечения (м²)
 
     [Header("Сила выстрела")]
     public float minForce = 1f;
-    public float maxForce = 100f;
+    public float maxForce = 1000f;
 
     [Header("Урон")]
     public float damage = 1;
@@ -38,6 +38,7 @@ public class Projectile : MonoBehaviour
 
     protected virtual void Awake()
     {
+        Time.fixedDeltaTime = 0.005f;
         rb = GetComponent<Rigidbody2D>();
         if (rb == null)
         {
@@ -48,28 +49,30 @@ public class Projectile : MonoBehaviour
             rb.bodyType = RigidbodyType2D.Kinematic;
         }
     }
+    private float GetSafeMass()
+    {
+        return Mathf.Max(mass, 0.01f); // Не позволит массе быть ≤0
+    }
 
     public void LaunchAtAngle(float angleDegrees, float force)
     {
+        float safeMass = GetSafeMass();
         float clampedForce = Mathf.Clamp(force, minForce, maxForce);
         float angleRad = angleDegrees * Mathf.Deg2Rad;
 
-        
-        externalForce = new Vector2(Mathf.Cos(angleRad), Mathf.Sin(angleRad)) * (clampedForce * forceScale);
+        Vector2 direction = new Vector2(Mathf.Cos(angleRad), Mathf.Sin(angleRad));
+        Vector2 initialVelocity = direction * (clampedForce * forceScale / safeMass);
 
-        Vector2 initialVelocity = externalForce / mass;
         currentPosition = transform.position;
-        previousPosition = currentPosition - initialVelocity * Time.fixedDeltaTime;
+        previousPosition = currentPosition - initialVelocity * Mathf.Max(Time.fixedDeltaTime, 0.0001f);
 
         isLaunched = true;
-
-        //Debug.Log($"[Projectile] Запуск: сила={clampedForce}, масштаб={forceScale}, импульс={externalForce}");
     }
 
     private float GetAirDensity(float height)
     {
-        // Экспоненциальное убывание плотности воздуха с высотой
-        return AirDensitySeaLevel * Mathf.Exp(-height / ScaleHeight);
+        float density = AirDensitySeaLevel * Mathf.Exp(-height / ScaleHeight);
+        return Mathf.Max(density, 0.01f); // Минимальная плотность
     }
 
     protected virtual void FixedUpdate()
@@ -86,7 +89,15 @@ public class Projectile : MonoBehaviour
         float height = currentPosition.y;
         float airDensity = GetAirDensity(height);
         float speed = velocity.magnitude;
-        Vector2 dragForce = -0.5f * dragCoefficient * airDensity * speed * velocity * crossSectionArea;
+        Vector2 dragForce;
+        if (speed > 20f)
+        {
+            dragForce = -0.5f * dragCoefficient * airDensity * speed * speed * velocity.normalized * crossSectionArea;
+        }
+        else
+        {
+            dragForce = Vector2.zero;
+        }
         //Debug.Log($"Сила сопротивления {dragForce}");
         // 3. Прикладная сила 
         Vector2 netForce = gravity + dragForce + windForce;
@@ -99,7 +110,10 @@ public class Projectile : MonoBehaviour
         currentPosition = nextPosition;
 
         rb.MovePosition(currentPosition);
-
+        if (velocity.magnitude < 0.01f)
+        {
+            acceleration += new Vector2(0, -0.5f); // небольшой "пинок" вниз
+        }
         // Поворот по направлению скорости
         if (velocity.sqrMagnitude > 0.0001f)
         {

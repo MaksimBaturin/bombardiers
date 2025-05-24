@@ -561,7 +561,7 @@ MonoBehaviour:
   fuel: 100
   fuelConsumption: 0
   maxHealth: 10
-  MaxShootForce: 15
+  MaxShootForce: 800
   CurrentShootPower: 0
   projectiles:
   - {fileID: 7455275883752459823, guid: c58491e94f151474496084641907fb8f, type: 3}
