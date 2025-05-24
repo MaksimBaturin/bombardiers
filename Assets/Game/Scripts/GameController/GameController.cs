@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,12 +28,17 @@ public class GameController: MonoBehaviour
             
         currentPlayer = playersTurnQueue[0];
         TankController.Instance.Tank = currentPlayer.Tank;
-
-        CalculateWind();
+        StartCoroutine(ShowUIOnStartGame());
         windTurnCounter++;
-        //uiController - показываем чей ход
     }
 
+    private IEnumerator ShowUIOnStartGame()
+    {
+        yield return new WaitForSeconds(1);
+        GameUI.Instance.ShowPlayerTurn(currentPlayer.name);
+        CalculateWind();
+        
+    }
     public void changePlayerTurn()
     {
         List<Player> alivePlayers = new List<Player>(playersTurnQueue.Count);
@@ -45,7 +51,7 @@ public class GameController: MonoBehaviour
         if (alivePlayers.Count == 1)
         {
             Debug.Log($"Игрок {alivePlayers[0].name} победил!");
-                
+            GameUI.Instance.ShowWinner(currentPlayer.name);
             return;
         }
         
@@ -68,6 +74,7 @@ public class GameController: MonoBehaviour
         
         currentPlayer = playersTurnQueue[nextPlayerIndex];
         TankController.Instance.Tank = currentPlayer.Tank;
+        GameUI.Instance.ShowPlayerTurn(currentPlayer.name);
         Debug.Log($"Ход игрока: {currentPlayer.name}");
 
         windTurnCounter++;
