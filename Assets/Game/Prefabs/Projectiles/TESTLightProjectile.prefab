@@ -104,10 +104,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   forceScale: 2
   mass: 50
-  airResistance: 0.1
   gravityScale: 1
+  dragCoefficient: 0.47
+  crossSectionArea: 0.1
   minForce: 1
-  maxForce: 100
+  maxForce: 1000
   damage: 15
   owner: {fileID: 0}
 --- !u!50 &456610050539718803
