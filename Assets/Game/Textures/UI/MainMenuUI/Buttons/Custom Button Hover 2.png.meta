@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 1742d6ab876669e4f9b6ecccca00aab6
+guid: 50f8b4431f8eb90428b5bb58462f785f
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 189676406429151809
-    second: tank_model_2_1_b_0
+      213: -1661259061568638401
+    second: Custom Button Hover 2_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -126,13 +126,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: tank_model_2_1_b_0
+      name: Custom Button Hover 2_0
       rect:
         serializedVersion: 2
-        x: 46
-        y: 88
-        width: 209
-        height: 124
+        x: 0
+        y: 0
+        width: 61
+        height: 61
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,8 +141,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 1427b7bcfadd1a200800000000000000
-      internalID: 189676406429151809
+      spriteID: f327d4b6fa502f8e0800000000000000
+      internalID: -1661259061568638401
       vertices: []
       indices: 
       edges: []
@@ -160,8 +160,7 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable:
-      tank_model_2_1_b_0: 189676406429151809
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

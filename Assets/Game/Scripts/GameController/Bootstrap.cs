@@ -23,6 +23,8 @@ public class Bootstrap: MonoBehaviour
     [SerializeField] private GameController gameControllerPrefab;
     [SerializeField] private WindController windControllerPrefab;
 
+    public static Player[] playersGlob;
+
     private System.Collections.Generic.List<GameObject> gameObjects = new System.Collections.Generic.List<GameObject>();
     
     public static Bootstrap Instance { get; private set; }
@@ -53,6 +55,8 @@ public class Bootstrap: MonoBehaviour
 
     public void GameInit(Player[] players)
     {
+
+        playersGlob = players;
         
         StartCoroutine(EnableLoadingScreen());
         
@@ -133,7 +137,7 @@ public class Bootstrap: MonoBehaviour
                         players[i].Tank.transform.position = spawnPoint;
 
                         // Создаем HealthBar для танка
-                        CreateTankHealthBar(players[i].Tank, players[i].color);
+                        CreateTankHealthBar(players[i].Tank, players[i].color, players[i].name);
                 
                         positionFound = true;
                     }
@@ -154,18 +158,19 @@ public class Bootstrap: MonoBehaviour
         gameController.StartGame(players);
     }
 
-    private void CreateTankHealthBar(TankModel tank, Color playerColor)
+    private void CreateTankHealthBar(TankModel tank, Color playerColor, string name)
     {
         GameObject healthBarObj = Instantiate(inGameUIPrefab);
         healthBarObj.transform.SetParent(tank.transform);
 
-        healthBarObj.transform.localScale = Vector3.one * 0.05f;
+        healthBarObj.transform.localScale = Vector3.one * 0.025f;
 
         HealthBar healthBar = healthBarObj.GetComponent<HealthBar>();
         if (healthBar != null)
         {
             healthBar.tank = tank; // Привязываем танк к HealthBar
             healthBar.imgObj.color = playerColor;
+            healthBar.SetName(name, playerColor);
             healthBar.Active();
         }
 

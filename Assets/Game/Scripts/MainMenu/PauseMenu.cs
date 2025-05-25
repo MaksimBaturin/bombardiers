@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class PauseMenu : MonoBehaviour
 {
@@ -39,6 +40,15 @@ public class PauseMenu : MonoBehaviour
         PauseGame = true;
         OnPause?.Invoke(PauseGame);
         Debug.Log("Game Paused! TimeScale: " + Time.timeScale); // ������ ���� 0
+    }
+
+    public void Restart()
+    {
+        Bootstrap.Instance.UnloadGame();
+        PauseGame = false;
+        PauseGameMenu.SetActive(false);
+        Bootstrap.Instance.GameInit(Bootstrap.playersGlob);
+        Time.timeScale = 1.0f;
     }
     public void LoadMenu()
     {
