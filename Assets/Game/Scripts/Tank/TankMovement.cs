@@ -9,6 +9,7 @@ namespace Game.Scripts
         [SerializeField] private Rigidbody2D rb;
 
         [SerializeField] private GameObject GroundCheckRight;
+        [SerializeField] private GameObject GroundCheckMiddle;
         [SerializeField] private GameObject GroundCheckLeft;
 
         [SerializeField] private GameObject AngleCheckRight;
@@ -65,14 +66,13 @@ namespace Game.Scripts
         {
             RaycastHit2D hitRight;
             RaycastHit2D hitLeft;
+            RaycastHit2D hitMid;
 
-            //Debug.DrawRay(GroundCheckLeft.transform.position, GroundCheckLeft.transform.TransformDirection(Vector2.down) * 0.1f, Color.red);
-            //Debug.DrawRay(GroundCheckRight.transform.position, GroundCheckRight.transform.TransformDirection(Vector2.down) * 0.1f, Color.red);
 
-            hitLeft = Physics2D.Raycast(GroundCheckLeft.transform.position, GroundCheckLeft.transform.TransformDirection(Vector2.down), 0.1f, LayerMask.GetMask("Ground"));
-            hitRight = Physics2D.Raycast(GroundCheckRight.transform.position, GroundCheckRight.transform.TransformDirection(Vector2.down), 0.1f, LayerMask.GetMask("Ground"));
-
-            return hitLeft.collider != null || hitRight.collider != null;
+            hitLeft = Physics2D.Raycast(GroundCheckLeft.transform.position, GroundCheckLeft.transform.TransformDirection(Vector2.down), 0.15f, LayerMask.GetMask("Ground"));
+            hitRight = Physics2D.Raycast(GroundCheckRight.transform.position, GroundCheckRight.transform.TransformDirection(Vector2.down), 0.15f, LayerMask.GetMask("Ground"));
+            hitMid= Physics2D.Raycast(GroundCheckMiddle.transform.position, GroundCheckMiddle.transform.TransformDirection(Vector2.down), 0.15f, LayerMask.GetMask("Ground"));
+            return hitLeft.collider != null || hitRight.collider != null || hitMid.collider != null;
         }
 
         private float CheckObstacleAngle(Vector2 direction)

@@ -139,7 +139,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -5340741674663327215, guid: d60e10e8febc7904da89dab91d8edd4e, type: 3}
+  m_Sprite: {fileID: 6413871548020420728, guid: 27c82257e4ed5c941bacac160ac6e2d8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -183,8 +183,40 @@ Transform:
   - {fileID: 6730935510003277301}
   - {fileID: 3454411699598710877}
   - {fileID: 1219082824205821230}
+  - {fileID: 7217757232155339193}
   - {fileID: 4959092638386063835}
   m_Father: {fileID: 8606056933653446444}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &6699719971521480438
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7217757232155339193}
+  m_Layer: 0
+  m_Name: AngleCheckMiddle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7217757232155339193
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6699719971521480438}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.002, y: -0.6173, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6203789888726722233}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7198921210151408709
 GameObject:
@@ -262,7 +294,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -966618306568683746, guid: b82c280c493dd09489720e07cdeb7db7, type: 3}
+  m_Sprite: {fileID: 189676406429151809, guid: 1742d6ab876669e4f9b6ecccca00aab6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -351,7 +383,7 @@ GameObject:
   - component: {fileID: 6583727394457422227}
   - component: {fileID: 6910638992197531517}
   m_Layer: 0
-  m_Name: Tank
+  m_Name: TankYellow
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -472,14 +504,14 @@ MonoBehaviour:
   health: 100
   fuel: 100
   fuelConsumption: 0
-  maxHealth: 10
+  maxHealth: 100
   MaxShootForce: 300
   CurrentShootPower: 0
   projectiles:
   - {fileID: 7455275883752459823, guid: c58491e94f151474496084641907fb8f, type: 3}
   - {fileID: 7455275883752459823, guid: 1e0b4e7c91832b64297a311960c0002e, type: 3}
   selectedProjectile: {fileID: 7455275883752459823, guid: 1e0b4e7c91832b64297a311960c0002e, type: 3}
-  AllowedAngleToRide: 30
+  AllowedAngleToRide: 35
 --- !u!114 &4683586259111788645
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -494,6 +526,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 7856911226025032964}
   GroundCheckRight: {fileID: 3142429416516095073}
+  GroundCheckMiddle: {fileID: 6699719971521480438}
   GroundCheckLeft: {fileID: 9118355629633272300}
   AngleCheckRight: {fileID: 7327196018766592037}
   AngleCheckLeft: {fileID: 7554458230374081171}

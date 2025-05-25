@@ -1,13 +1,19 @@
 using System.Collections;
+using System.Diagnostics;
 using UnityEngine;
 using Random = UnityEngine.Random;
 using Game.Scripts;
 using static UnityEditor.U2D.ScriptablePacker;
+using Debug = UnityEngine.Debug;
 
 
 public class Bootstrap: MonoBehaviour
 {
-    [SerializeField] private GameObject tankPrefab;
+    [SerializeField] private GameObject tankGreenPrefab;
+    [SerializeField] private GameObject tankRedPrefab;
+    [SerializeField] private GameObject tankBluePrefab;
+    [SerializeField] private GameObject tankYellowPrefab;
+    
     [SerializeField] private GameObject terrainPrefab;
     [SerializeField] private GameObject inGameUIPrefab;
     [SerializeField] private TankController tankControllerPrefab;
@@ -56,31 +62,82 @@ public class Bootstrap: MonoBehaviour
         GameObject globalUI = Instantiate(GlobalUIPrefab);
         gameObjects.Add(globalUI);
 
-        gameObjects.Add(Instantiate(terrainPrefab));
-        
+        Vector3 bottomLeft = Camera.main.ViewportToWorldPoint(new Vector3(0, 0, Camera.main.nearClipPlane));
+        Vector3 topRight = Camera.main.ViewportToWorldPoint(new Vector3(1, 1, Camera.main.nearClipPlane));
 
+        // Теперь можно получить размеры
+        float width = topRight.x - bottomLeft.x;
+        
+        GameObject terrain = Instantiate(terrainPrefab);
+        gameObjects.Add(terrain.gameObject);
+        terrain.GetComponent<TerrainGenerator>().terrainLength = width;
+        Vector3 TerrainPos = terrain.transform.position;
+        TerrainPos.x = bottomLeft.x;
+        TerrainPos.y -= 10f;
+        terrain.transform.position = TerrainPos;
+        terrain.GetComponent<TerrainGenerator>().GenerateTerrain();
+        
         for (int i = 0; i < players.Length; i++)
         {
-            Vector3 bottomLeft = Camera.main.ViewportToWorldPoint(new Vector3(0, 0, Camera.main.nearClipPlane));
-            Vector3 topRight = Camera.main.ViewportToWorldPoint(new Vector3(1, 1, Camera.main.nearClipPlane));
+            bool positionFound = false;
+            int attempts = 0;
+            const int maxAttempts = 100;
+            const float minDistance = 50f;
 
-            // Теперь можно получить размеры
-            float width = topRight.x - bottomLeft.x;
-            
-            float positionX = Random.Range(-width / 2, width / 2);
-            float positionY = 50f;
-
-            RaycastHit2D hit = Physics2D.Raycast(new Vector2(positionX, positionY), -Vector2.up, 500, LayerMask.GetMask("Ground"));
-
-            if (hit)
+            while (!positionFound && attempts < maxAttempts)
             {
-                players[i].Tank = Instantiate(tankPrefab).GetComponent<TankModel>();
-                gameObjects.Add(players[i].Tank.gameObject);
-                Debug.Log(players[i].Tank.gameObject.GetInstanceID());
-                players[i].Tank.transform.position = hit.point + new Vector2(0, 30f);
+                attempts++;
+        
+                
+                float positionX = Random.Range(-width / 2, width / 2);
+                float positionY = 50f;
 
-                // Создаем HealthBar для танка
-                CreateTankHealthBar(players[i].Tank, players[i].color);
+                RaycastHit2D hit = Physics2D.Raycast(new Vector2(positionX, positionY), -Vector2.up, 500, LayerMask.GetMask("Ground"));
+
+                if (hit)
+                {
+                    Vector2 spawnPoint = hit.point + new Vector2(0, 30f);
+            
+                    
+                    bool tooClose = false;
+                    foreach (var player in players)
+                    {
+                        if (player.Tank != null && Vector2.Distance(player.Tank.transform.position, spawnPoint) < minDistance)
+                        {
+                            tooClose = true;
+                            break;
+                        }
+                    }
+            
+                    
+                    if (!tooClose)
+                    {
+                        if (players[i].color == Color.green)
+                        {
+                            players[i].Tank = Instantiate(tankGreenPrefab).GetComponent<TankModel>();
+                        }
+                        else if (players[i].color == Color.red)
+                        {
+                            players[i].Tank = Instantiate(tankRedPrefab).GetComponent<TankModel>();
+                        }
+                        else if (players[i].color == Color.yellow)
+                        {
+                            players[i].Tank = Instantiate(tankYellowPrefab).GetComponent<TankModel>();
+                        }
+                        else
+                        {
+                            players[i].Tank = Instantiate(tankBluePrefab).GetComponent<TankModel>();
+                        }
+                        gameObjects.Add(players[i].Tank.gameObject);
+                        Debug.Log(players[i].Tank.gameObject.GetInstanceID());
+                        players[i].Tank.transform.position = spawnPoint;
+
+                        // Создаем HealthBar для танка
+                        CreateTankHealthBar(players[i].Tank, players[i].color);
+                
+                        positionFound = true;
+                    }
+                }
             }
         }
         GameController gameController = Instantiate(gameControllerPrefab);
