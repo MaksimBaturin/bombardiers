@@ -17,6 +17,8 @@ public class Bootstrap: MonoBehaviour
     [SerializeField] private GameController gameControllerPrefab;
     [SerializeField] private WindController windControllerPrefab;
 
+    public static Player[] playersGlob;
+
     private System.Collections.Generic.List<GameObject> gameObjects = new System.Collections.Generic.List<GameObject>();
     
     public static Bootstrap Instance { get; private set; }
@@ -47,6 +49,8 @@ public class Bootstrap: MonoBehaviour
 
     public void GameInit(Player[] players)
     {
+
+        playersGlob = players;
         
         StartCoroutine(EnableLoadingScreen());
         
