@@ -10,6 +10,8 @@ public class HealthBar : MonoBehaviour
     public TextMeshProUGUI healthText; // Текст с процентом здоровья
     public float offsetY = 2f; // Смещение по высоте над танком
     public GameObject HealthBarPanel;
+    public GameObject playerName;
+    public TextMeshProUGUI playerNameText;
 
     private float maxWidth = 274f;
     private RectTransform healthBarRect;
@@ -36,9 +38,20 @@ public class HealthBar : MonoBehaviour
         }
     }
 
+    public void SetName(string name, Color playerColor)
+    {
+        // Устанавливаем имя игрока
+        if (tank != null && tank.name != null)
+        {
+            playerNameText.text = name;
+            playerNameText.color = playerColor;
+        }
+    }
+
     public void Active()
     {
         HealthBarPanel.SetActive(true);
+        playerName.SetActive(true);
     }
 
     private void UpdateHealthDisplay()
