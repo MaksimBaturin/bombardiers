@@ -100,7 +100,7 @@ public class Bootstrap: MonoBehaviour
 
                 if (hit)
                 {
-                    Vector2 spawnPoint = hit.point + new Vector2(0, 30f);
+                    Vector2 spawnPoint = hit.point + new Vector2(0, 5f);
             
                     
                     bool tooClose = false;
